@@ -212,6 +212,7 @@ _pkginfo.txt
 
 # Others
 ClientBin/
+Resources/
 ~$*
 *~
 *.dbmdl
@@ -219,6 +220,10 @@ ClientBin/
 *.jfm
 *.pfx
 *.publishsettings
+*.zip
+*.rar
+*.doc
+*.docx
 orleans.codegen.cs
 
 # Including strong name files can present a security risk 
