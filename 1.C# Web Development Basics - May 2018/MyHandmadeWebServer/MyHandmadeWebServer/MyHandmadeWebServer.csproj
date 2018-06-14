@@ -8,11 +8,7 @@
   <ItemGroup>
     <Folder Include="Application\Controllers\" />
     <Folder Include="Application\Views\" />
-    <Folder Include="Server\Contracts\" />
-    <Folder Include="Server\Enums\" />
-    <Folder Include="Server\Exceptions\" />
     <Folder Include="Server\Handlers\Contracts\" />
-    <Folder Include="Server\HTTP\Response\" />
     <Folder Include="Server\Routing\Contracts\" />
   </ItemGroup>
 
