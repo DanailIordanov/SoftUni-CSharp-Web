@@ -1,14 +1,14 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP
+﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.HTTP.Contracts;
+    using MyHandmadeWebServer.Server.Http.Contracts;
 
-    class HttpContext : IHttpContext
+    public class HttpContext : IHttpContext
     {
         private readonly IHttpRequest request;
 
-        public HttpContext(string requestString)
+        public HttpContext(IHttpRequest request)
         {
-            this.request = new HttpRequest(requestString);
+            this.request = request;
         }
 
         public IHttpRequest Request => this.request;

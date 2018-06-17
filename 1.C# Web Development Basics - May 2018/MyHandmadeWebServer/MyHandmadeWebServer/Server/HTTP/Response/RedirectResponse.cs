@@ -1,4 +1,4 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Response
+﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
     using MyHandmadeWebServer.Server.Enums;
 

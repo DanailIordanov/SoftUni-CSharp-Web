@@ -1,4 +1,4 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Contracts
+﻿namespace MyHandmadeWebServer.Server.Http.Contracts
 {
     using MyHandmadeWebServer.Server.Enums;
 
@@ -7,5 +7,7 @@
         HttpStatusCode StatusCode { get; }
 
         IHttpHeaderCollection Headers { get; }
+
+        void AddHeader(string key, string value);
     }
 }

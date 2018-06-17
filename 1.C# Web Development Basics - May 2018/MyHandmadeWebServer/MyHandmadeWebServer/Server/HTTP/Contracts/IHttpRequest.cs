@@ -1,4 +1,4 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Contracts
+﻿namespace MyHandmadeWebServer.Server.Http.Contracts
 {
     using MyHandmadeWebServer.Server.Enums;
 
@@ -6,19 +6,19 @@
 
     public interface IHttpRequest
     {
-        IDictionary<string, string> FormData { get; }
+        HttpRequestMethod RequestMethod { get; }
+                
+        string Url { get; }
 
-        IHttpHeaderCollection Headers { get; }
+        IDictionary<string, string> UrlParameters { get; }
 
         string Path { get; }
 
         IDictionary<string, string> QueryParameters { get; }
 
-        HttpRequestMethod RequestMethod { get; }
+        IHttpHeaderCollection Headers { get; }
 
-        string Url { get; }
-
-        IDictionary<string, string> UrlParameters { get; }
+        IDictionary<string, string> FormData { get; }
 
         void AddUrlParameter(string key, string value);
     }

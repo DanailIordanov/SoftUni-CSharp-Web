@@ -1,7 +1,7 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Response
+﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
     using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.HTTP.Contracts;
+    using MyHandmadeWebServer.Server.Http.Contracts;
 
     using System.Text;
 
@@ -18,7 +18,7 @@
 
         private string StatusMessage => this.StatusCode.ToString();
 
-        protected void AddHeader(string key, string value)
+        public void AddHeader(string key, string value)
         {
             var header = new HttpHeader(key, value);
             this.Headers.Add(header);

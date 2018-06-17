@@ -1,4 +1,4 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Contracts
+﻿namespace MyHandmadeWebServer.Server.Http.Contracts
 {
     public interface IHttpContext
     {

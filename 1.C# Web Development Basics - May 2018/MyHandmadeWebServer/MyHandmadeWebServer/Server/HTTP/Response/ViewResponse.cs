@@ -1,7 +1,8 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP.Response
+﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
     using MyHandmadeWebServer.Server.Contracts;
     using MyHandmadeWebServer.Server.Enums;
+    using MyHandmadeWebServer.Server.Exceptions;
 
     public class ViewResponse : HttpResponse
     {

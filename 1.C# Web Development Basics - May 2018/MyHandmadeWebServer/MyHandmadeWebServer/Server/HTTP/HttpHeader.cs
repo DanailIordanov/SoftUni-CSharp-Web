@@ -1,4 +1,4 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP
+﻿namespace MyHandmadeWebServer.Server.Http
 {
     public class HttpHeader
     {

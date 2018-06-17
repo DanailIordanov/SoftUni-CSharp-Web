@@ -1,7 +1,8 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP
+﻿namespace MyHandmadeWebServer.Server.Http
 {
     using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.HTTP.Contracts;
+    using MyHandmadeWebServer.Server.Exceptions;
+    using MyHandmadeWebServer.Server.Http.Contracts;
 
     using System;
     using System.Collections.Generic;
@@ -21,8 +22,6 @@
 
         public HttpRequestMethod RequestMethod { get; private set; }
 
-        public IHttpHeaderCollection Headers { get; private set; }
-
         public string Url { get; private set; }
 
         public IDictionary<string, string> UrlParameters { get; private set; }
@@ -30,6 +29,8 @@
         public string Path { get; private set; }
 
         public IDictionary<string, string> QueryParameters { get; private set; }
+
+        public IHttpHeaderCollection Headers { get; private set; }
 
         public IDictionary<string, string> FormData { get; private set; }
         
@@ -83,10 +84,10 @@
                 var headerArgs = requestLines[i].Split(": ", StringSplitOptions.None);
 
                 var header = new HttpHeader(headerArgs[0], headerArgs[1]);
-                this.HeaderCollection.Add(header);
+                this.Headers.Add(header);
             }
 
-            if (!this.HeaderCollection.ContainsKey("Host"))
+            if (!this.Headers.ContainsKey("Host"))
             {
                 throw new BadRequestException("Missing a host header");
             }

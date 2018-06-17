@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace MyHandmadeWebServer.Server.HTTP
+﻿namespace MyHandmadeWebServer.Server.Exceptions
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [Serializable]
     public class BadRequestException : Exception
     {

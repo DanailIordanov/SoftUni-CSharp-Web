@@ -1,8 +1,8 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace MyHandmadeWebServer.Server.HTTP.Response
+﻿namespace MyHandmadeWebServer.Server.Exceptions
 {
+    using System;
+    using System.Runtime.Serialization;
+
     [Serializable]
     public class InvalidResponseException : Exception
     {

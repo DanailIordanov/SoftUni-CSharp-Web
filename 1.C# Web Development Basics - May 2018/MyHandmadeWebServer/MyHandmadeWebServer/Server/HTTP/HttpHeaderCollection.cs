@@ -1,6 +1,6 @@
-﻿namespace MyHandmadeWebServer.Server.HTTP
+﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.HTTP.Contracts;
+    using MyHandmadeWebServer.Server.Http.Contracts;
 
     using System.Collections.Generic;
     using System.Linq;
