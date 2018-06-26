@@ -1,12 +1,12 @@
 ﻿namespace MyHandmadeWebServer.Server.Http.Contracts
 {
-    using MyHandmadeWebServer.Server.Enums;
+    using Enums;
 
     using System.Collections.Generic;
 
     public interface IHttpRequest
     {
-        HttpRequestMethod RequestMethod { get; }
+        HttpRequestMethod Method { get; }
                 
         string Url { get; }
 

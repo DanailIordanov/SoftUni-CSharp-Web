@@ -1,7 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server.Routing
 {
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Common;
+    using Contracts;
+    using Handlers.Contracts;
 
     using System.Collections.Generic;
 
@@ -9,6 +10,9 @@
     {
         public RoutingContext(IRequestHandler handler, IEnumerable<string> parameters)
         {
+            CoreValidator.ThrowIfNull(handler, nameof(handler));
+            CoreValidator.ThrowIfNull(parameters, nameof(parameters));
+
             this.RequestHandler = handler;
             this.Parameters = parameters;
         }

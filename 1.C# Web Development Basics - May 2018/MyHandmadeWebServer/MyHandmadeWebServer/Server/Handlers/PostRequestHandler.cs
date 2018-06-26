@@ -1,6 +1,6 @@
 ﻿namespace MyHandmadeWebServer.Server.Handlers
 {
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Http.Contracts;
 
     using System;
 

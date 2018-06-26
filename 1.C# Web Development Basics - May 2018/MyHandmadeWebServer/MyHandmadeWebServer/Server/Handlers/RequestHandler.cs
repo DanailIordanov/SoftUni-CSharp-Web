@@ -1,7 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server.Handlers
 {
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
+    using Http.Contracts;
 
     using System;
 
@@ -11,6 +12,8 @@
 
         public RequestHandler(Func<IHttpRequest, IHttpResponse> handlingFunc)
         {
+            CoreValidator.ThrowIfNull(handlingFunc, nameof(handlingFunc));
+
             this.handlingFunc = handlingFunc;
         }
 

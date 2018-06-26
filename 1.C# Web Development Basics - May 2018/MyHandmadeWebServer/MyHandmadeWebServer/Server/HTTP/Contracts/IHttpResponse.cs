@@ -1,6 +1,6 @@
 ﻿namespace MyHandmadeWebServer.Server.Http.Contracts
 {
-    using MyHandmadeWebServer.Server.Enums;
+    using Enums;
 
     public interface IHttpResponse
     {

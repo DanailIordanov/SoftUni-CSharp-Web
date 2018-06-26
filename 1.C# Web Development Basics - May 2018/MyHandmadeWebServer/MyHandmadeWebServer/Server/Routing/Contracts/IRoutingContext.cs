@@ -1,6 +1,6 @@
 ﻿namespace MyHandmadeWebServer.Server.Routing.Contracts
 {
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
+    using Handlers.Contracts;
 
     using System.Collections.Generic;
 

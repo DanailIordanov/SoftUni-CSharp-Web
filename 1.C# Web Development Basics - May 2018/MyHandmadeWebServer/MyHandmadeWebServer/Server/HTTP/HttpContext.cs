@@ -1,6 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
 
     public class HttpContext : IHttpContext
     {
@@ -8,6 +9,8 @@
 
         public HttpContext(IHttpRequest request)
         {
+            CoreValidator.ThrowIfNull(request, nameof(request));
+
             this.request = request;
         }
 

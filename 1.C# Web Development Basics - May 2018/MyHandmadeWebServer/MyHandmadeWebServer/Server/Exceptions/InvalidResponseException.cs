@@ -10,15 +10,18 @@
         {
         }
 
-        public InvalidResponseException(string message) : base(message)
+        public InvalidResponseException(string message)
+            : base(message)
         {
         }
 
-        public InvalidResponseException(string message, Exception innerException) : base(message, innerException)
+        public InvalidResponseException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
 
-        protected InvalidResponseException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected InvalidResponseException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
     }

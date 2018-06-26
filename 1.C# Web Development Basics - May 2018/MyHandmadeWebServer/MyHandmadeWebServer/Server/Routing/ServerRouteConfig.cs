@@ -1,7 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server.Routing
 {
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Common;
+    using Contracts;
+    using Enums;
 
     using System;
     using System.Collections.Generic;
@@ -15,6 +16,8 @@
 
         public ServerRouteConfig(IAppRouteConfig appRouteConfig)
         {
+            CoreValidator.ThrowIfNull(appRouteConfig, nameof(appRouteConfig));
+
             this.routes = new Dictionary<HttpRequestMethod, IDictionary<string, IRoutingContext>>();
 
             foreach (var requestMethod in Enum.GetValues(typeof(HttpRequestMethod)).Cast<HttpRequestMethod>())

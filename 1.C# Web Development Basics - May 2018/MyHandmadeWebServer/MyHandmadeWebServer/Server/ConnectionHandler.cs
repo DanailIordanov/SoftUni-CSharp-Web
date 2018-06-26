@@ -1,9 +1,10 @@
 ﻿namespace MyHandmadeWebServer.Server
 {
-    using MyHandmadeWebServer.Server.Handlers;         
-    using MyHandmadeWebServer.Server.Http;
-    using MyHandmadeWebServer.Server.Http.Contracts;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Common;
+    using Handlers;         
+    using Http;
+    using Http.Contracts;
+    using Routing.Contracts;
 
     using System;
     using System.Net.Sockets;
@@ -13,11 +14,13 @@
     public class ConnectionHandler
     {
         private readonly Socket client;
-
         private readonly IServerRouteConfig serverRouteConfig;
 
         public ConnectionHandler(Socket client, IServerRouteConfig serverRouteConfig)
         {
+            CoreValidator.ThrowIfNull(client, nameof(client));
+            CoreValidator.ThrowIfNull(serverRouteConfig, nameof(serverRouteConfig));
+
             this.client = client;
             this.serverRouteConfig = serverRouteConfig;
         }
@@ -26,15 +29,17 @@
         {
             var httpRequest = await this.ReadRequest();
 
-            var context = new HttpContext(httpRequest);
-            var handler = new HttpHandler(this.serverRouteConfig);
+            var httpContext = new HttpContext(httpRequest);
+            var httpHandler = new HttpHandler(this.serverRouteConfig);
 
-            var httpResponse = handler.Handle(context);
+            var httpResponse = httpHandler.Handle(httpContext);
             var responseSegments = new ArraySegment<byte>(Encoding.ASCII.GetBytes(httpResponse.ToString()));
 
             await this.client.SendAsync(responseSegments, SocketFlags.None);
 
+            Console.WriteLine("-------REQUEST-------");
             Console.WriteLine(httpRequest);
+            Console.WriteLine("-------RESPONSE------");
             Console.WriteLine(httpResponse.ToString());
 
             this.client.Shutdown(SocketShutdown.Both);
@@ -57,7 +62,7 @@
                 var bytesAsString = Encoding.ASCII.GetString(data.Array);
                 requestString.Append(bytesAsString);
 
-                if (readBytesCount < 1023)
+                if (readBytesCount < 1024)
                 {
                     break;
                 }

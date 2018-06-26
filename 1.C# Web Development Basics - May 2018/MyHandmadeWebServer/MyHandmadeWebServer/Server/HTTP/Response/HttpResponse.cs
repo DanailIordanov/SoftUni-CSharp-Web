@@ -1,7 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Enums;
+    using Http.Contracts;
 
     using System.Text;
 
@@ -31,6 +31,7 @@
 
             response.AppendLine($"HTTP/1.1 {statusCode} {this.StatusMessage}");
             response.AppendLine(this.Headers.ToString());
+            response.AppendLine();
 
             return response.ToString();
         }

@@ -1,6 +1,6 @@
 ﻿namespace MyHandmadeWebServer.Server.Handlers.Contracts
 {
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Http.Contracts;
 
     public interface IRequestHandler
     {

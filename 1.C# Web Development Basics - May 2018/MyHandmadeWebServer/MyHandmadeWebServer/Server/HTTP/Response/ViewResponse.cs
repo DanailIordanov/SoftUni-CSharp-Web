@@ -1,8 +1,9 @@
 ﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
-    using MyHandmadeWebServer.Server.Contracts;
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Exceptions;
+    using Common;
+    using Enums;
+    using Exceptions;
+    using Server.Contracts;
 
     public class ViewResponse : HttpResponse
     {
@@ -12,6 +13,7 @@
             : base()
         {
             this.ValidateStatusCode(statusCode);
+            CoreValidator.ThrowIfNull(view, nameof(view));
 
             this.StatusCode = statusCode;
             this.view = view;
@@ -24,6 +26,11 @@
             {
                 throw new InvalidResponseException("View responses need a status code below 300 or above 400 (inclusive).");
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()}{this.view.View()}";
         }
     }
 }

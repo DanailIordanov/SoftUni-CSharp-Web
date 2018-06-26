@@ -2,7 +2,7 @@
 {
     public enum HttpRequestMethod
     {
-        GET,
-        POST,
+        Get,
+        Post,
     }
 }

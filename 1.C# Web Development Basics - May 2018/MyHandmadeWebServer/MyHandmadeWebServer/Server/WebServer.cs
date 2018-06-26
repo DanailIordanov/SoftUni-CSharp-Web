@@ -1,8 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server
 {
-    using MyHandmadeWebServer.Server.Contracts;
-    using MyHandmadeWebServer.Server.Routing;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Contracts;
+    using Routing;
+    using Routing.Contracts;
 
     using System;
     using System.Net;

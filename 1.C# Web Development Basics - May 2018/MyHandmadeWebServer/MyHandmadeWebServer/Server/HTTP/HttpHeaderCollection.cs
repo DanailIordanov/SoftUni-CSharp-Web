@@ -1,9 +1,10 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
 
+    using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class HttpHeaderCollection : IHttpHeaderCollection
     {
@@ -21,22 +22,23 @@
 
         public bool ContainsKey(string key)
         {
-            if (this.headers.ContainsKey(key))
-            {
-                return true;
-            }
+            CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
 
-            return false;
+            return this.headers.ContainsKey(key);
         }
 
         public HttpHeader GetHeader(string key)
         {
-            return this.headers.First(h => h.Key == key).Value;
+            CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
+
+            if (!this.headers.ContainsKey(key))
+            {
+                throw new InvalidOperationException($"The given key '{key}' is not present in the headers collection.");
+            }
+
+            return this.headers[key];
         }
 
-        public override string ToString()
-        {
-            return string.Join("\n", this.headers);
-        }
+        public override string ToString() => string.Join(Environment.NewLine, this.headers);
     }
 }

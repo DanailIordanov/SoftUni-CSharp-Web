@@ -1,8 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server.Routing
 {
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Contracts;
+    using Enums;
+    using Handlers.Contracts;
 
     using System;
     using System.Collections.Generic;
@@ -28,11 +28,15 @@
         {
             if (requestHandler.GetType().ToString().ToLower().Contains("get"))
             {
-                this.routes[HttpRequestMethod.GET].Add(route, requestHandler);
+                this.routes[HttpRequestMethod.Get].Add(route, requestHandler);
             }
             else if (requestHandler.GetType().ToString().ToLower().Contains("post"))
             {
-                this.routes[HttpRequestMethod.POST].Add(route, requestHandler);
+                this.routes[HttpRequestMethod.Post].Add(route, requestHandler);
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid handler.");
             }
         }
     }

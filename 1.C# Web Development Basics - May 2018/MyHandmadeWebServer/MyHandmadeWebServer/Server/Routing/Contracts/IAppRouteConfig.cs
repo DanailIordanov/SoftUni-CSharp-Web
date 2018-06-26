@@ -1,7 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Routing.Contracts
 {
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
+    using Enums;
+    using Handlers.Contracts;
 
     using System.Collections.Generic;
 

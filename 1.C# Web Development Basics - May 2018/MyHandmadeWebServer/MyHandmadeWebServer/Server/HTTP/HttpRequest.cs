@@ -1,17 +1,21 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Enums;
-    using MyHandmadeWebServer.Server.Exceptions;
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
+    using Enums;
+    using Exceptions;
 
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
 
     public class HttpRequest : IHttpRequest
     {
         public HttpRequest(string requestString)
         {
+            CoreValidator.ThrowIfNullOrEmpty(requestString, nameof(requestString));
+
             this.Headers = new HttpHeaderCollection();
             this.UrlParameters = new Dictionary<string, string>();
             this.QueryParameters = new Dictionary<string, string>();
@@ -20,7 +24,7 @@
             this.ParseRequest(requestString);
         }
 
-        public HttpRequestMethod RequestMethod { get; private set; }
+        public HttpRequestMethod Method { get; private set; }
 
         public string Url { get; private set; }
 
@@ -33,31 +37,39 @@
         public IHttpHeaderCollection Headers { get; private set; }
 
         public IDictionary<string, string> FormData { get; private set; }
-        
+
         public void AddUrlParameter(string key, string value)
         {
-            this.UrlParameters.Add(key, value);
+            CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
+            CoreValidator.ThrowIfNullOrEmpty(value, nameof(value));
+
+            this.UrlParameters[key] = value;
         }
 
         private void ParseRequest(string requestString)
         {
-            var requestLines = requestString.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var requestLines = requestString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (!requestLines.Any())
+            {
+                throw new BadRequestException("Invalid request.");
+            }
 
             var requestLine = requestLines[0].Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (requestLine.Length != 3 || requestLine[2].ToLower() != "http/1.1")
             {
-                throw new BadRequestException("Invalid request line");
+                throw new BadRequestException("Invalid request line.");
             }
 
-            this.RequestMethod = this.ParseRequestMethod(requestLine[0]);
+            this.Method = this.ParseRequestMethod(requestLine[0]);
             this.Url = requestLine[1];
-            this.Path = this.Url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
+            this.Path = this.ParsePath(this.Url);
 
             this.ParseHeaders(requestLines);
             this.ParseParameters();
 
-            if (this.RequestMethod == HttpRequestMethod.POST)
+            if (this.Method == HttpRequestMethod.Post)
             {
                 this.ParseQuery(requestLines[requestLines.Length - 1], this.FormData);
             }
@@ -67,29 +79,39 @@
         {
             try
             {
-                Enum.TryParse(requestMethod, true, out HttpRequestMethod method);
-                return method;
+                return Enum.Parse<HttpRequestMethod>(requestMethod, true);
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
-                throw new BadRequestException("Invalid request method");
+                throw new BadRequestException("Invalid request method.");
             }
+        }
+
+        private string ParsePath(string url)
+        {
+            return url.Split(new[] { '?', '#' }, StringSplitOptions.RemoveEmptyEntries)[0];
         }
 
         private void ParseHeaders(string[] requestLines)
         {
             var endIndex = Array.IndexOf(requestLines, string.Empty);
-            for (int i = 0; i < endIndex; i++)
-            {
-                var headerArgs = requestLines[i].Split(": ", StringSplitOptions.None);
 
-                var header = new HttpHeader(headerArgs[0], headerArgs[1]);
+            for (int i = 1; i < endIndex; i++)
+            {
+                var headerArgs = requestLines[i].Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (headerArgs.Length != 2)
+                {
+                    throw new BadRequestException($"The request contains an invalid header.");
+                }
+
+                var header = new HttpHeader(headerArgs[0], headerArgs[1].Trim());
                 this.Headers.Add(header);
             }
 
             if (!this.Headers.ContainsKey("Host"))
             {
-                throw new BadRequestException("Missing a host header");
+                throw new BadRequestException("Missing a host header.");
             }
         }
 
@@ -100,7 +122,7 @@
                 return;
             }
 
-            var query = this.Url.Split("?")[1];
+            var query = this.Url.Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)[1];
             ParseQuery(query, this.QueryParameters);
         }
 
@@ -111,20 +133,20 @@
                 return;
             }
 
-            var queryPairs = query.Split("&");
+            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var pair in queryPairs)
             {
-                var pairArgs = pair.Split("=");
+                var pairArgs = pair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
                 if (pairArgs.Length != 2)
                 {
                     continue;
                 }
 
-                var key = pairArgs[0];
-                var value = pairArgs[1];
+                var key = WebUtility.UrlDecode(pairArgs[0]);
+                var value = WebUtility.UrlDecode(pairArgs[1]);
 
-                dictionary.Add(WebUtility.UrlDecode(key), WebUtility.UrlDecode(value));
+                dictionary.Add(key, value);
             }
         }
     }

@@ -2,7 +2,7 @@
 {
     public enum HttpStatusCode
     {
-        OK = 200,
+        Ok = 200,
         MovedPermanently = 301,
         Found = 302,
         MovedTemporarily = 303,

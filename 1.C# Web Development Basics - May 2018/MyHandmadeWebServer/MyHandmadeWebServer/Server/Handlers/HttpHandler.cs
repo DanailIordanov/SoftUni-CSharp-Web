@@ -1,8 +1,10 @@
 ﻿namespace MyHandmadeWebServer.Server.Handlers
 {
-    using MyHandmadeWebServer.Server.Handlers.Contracts;
-    using MyHandmadeWebServer.Server.Http.Contracts;
-    using MyHandmadeWebServer.Server.Routing.Contracts;
+    using Common;
+    using Contracts;
+    using Http.Contracts;
+    using Http.Response;
+    using Routing.Contracts;
 
     using System.Text.RegularExpressions;
 
@@ -12,12 +14,14 @@
 
         public HttpHandler(IServerRouteConfig serverRouteConfig)
         {
+            CoreValidator.ThrowIfNull(serverRouteConfig, nameof(serverRouteConfig));
+
             this.serverRouteConfig = serverRouteConfig;
         }
 
         public IHttpResponse Handle(IHttpContext context)
         {
-            var requestMethod = context.Request.RequestMethod;
+            var requestMethod = context.Request.Method;
             var requestPath = context.Request.Path;
 
             foreach (var registeredRoute in this.serverRouteConfig.Routes[requestMethod])
@@ -43,8 +47,8 @@
 
                 return routingContext.RequestHandler.Handle(context);
             }
-            //TODO
-            return null;
+            
+            return new NotFoundResponse();
         }
     }
 }
