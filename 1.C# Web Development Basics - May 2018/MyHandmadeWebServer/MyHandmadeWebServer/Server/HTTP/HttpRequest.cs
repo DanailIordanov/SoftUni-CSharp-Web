@@ -12,16 +12,20 @@
 
     public class HttpRequest : IHttpRequest
     {
-        public HttpRequest(string requestString)
+        private string requestText;
+
+        public HttpRequest(string requestText)
         {
-            CoreValidator.ThrowIfNullOrEmpty(requestString, nameof(requestString));
+            CoreValidator.ThrowIfNullOrEmpty(requestText, nameof(requestText));
+
+            this.requestText = requestText;
 
             this.Headers = new HttpHeaderCollection();
             this.UrlParameters = new Dictionary<string, string>();
             this.QueryParameters = new Dictionary<string, string>();
             this.FormData = new Dictionary<string, string>();
 
-            this.ParseRequest(requestString);
+            this.ParseRequest(requestText);
         }
 
         public HttpRequestMethod Method { get; private set; }
@@ -48,7 +52,7 @@
 
         private void ParseRequest(string requestString)
         {
-            var requestLines = requestString.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var requestLines = requestString.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
             if (!requestLines.Any())
             {
@@ -98,7 +102,7 @@
 
             for (int i = 1; i < endIndex; i++)
             {
-                var headerArgs = requestLines[i].Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                var headerArgs = requestLines[i].Split(new[] { ": " }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (headerArgs.Length != 2)
                 {
@@ -149,5 +153,7 @@
                 dictionary.Add(key, value);
             }
         }
+
+        public override string ToString() => this.requestText;
     }
 }

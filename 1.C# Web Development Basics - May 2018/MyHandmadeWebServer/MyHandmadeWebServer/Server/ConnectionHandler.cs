@@ -29,18 +29,22 @@
         {
             var httpRequest = await this.ReadRequest();
 
-            var httpContext = new HttpContext(httpRequest);
-            var httpHandler = new HttpHandler(this.serverRouteConfig);
+            if (httpRequest != null)
+            {
+                var httpContext = new HttpContext(httpRequest);
+                var httpHandler = new HttpHandler(this.serverRouteConfig);
 
-            var httpResponse = httpHandler.Handle(httpContext);
-            var responseSegments = new ArraySegment<byte>(Encoding.ASCII.GetBytes(httpResponse.ToString()));
+                var httpResponse = httpHandler.Handle(httpContext);
+                var responseSegments = new ArraySegment<byte>(Encoding.ASCII.GetBytes(httpResponse.ToString()));
 
-            await this.client.SendAsync(responseSegments, SocketFlags.None);
+                await this.client.SendAsync(responseSegments, SocketFlags.None);
 
-            Console.WriteLine("-------REQUEST-------");
-            Console.WriteLine(httpRequest);
-            Console.WriteLine("-------RESPONSE------");
-            Console.WriteLine(httpResponse.ToString());
+                Console.WriteLine("-------REQUEST-------");
+                Console.WriteLine(httpRequest);
+                Console.WriteLine("-------RESPONSE------");
+                Console.WriteLine(httpResponse);
+                Console.WriteLine();
+            }
 
             this.client.Shutdown(SocketShutdown.Both);
         }

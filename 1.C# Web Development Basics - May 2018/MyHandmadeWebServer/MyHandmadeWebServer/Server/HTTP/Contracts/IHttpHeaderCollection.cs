@@ -6,6 +6,6 @@
 
         bool ContainsKey(string key);
 
-        HttpHeader GetHeader(string key);
+        HttpHeader Get(string key);
     }
 }

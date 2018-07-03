@@ -5,6 +5,7 @@
 
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public class HttpHeaderCollection : IHttpHeaderCollection
     {
@@ -27,7 +28,7 @@
             return this.headers.ContainsKey(key);
         }
 
-        public HttpHeader GetHeader(string key)
+        public HttpHeader Get(string key)
         {
             CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
 
@@ -39,6 +40,16 @@
             return this.headers[key];
         }
 
-        public override string ToString() => string.Join(Environment.NewLine, this.headers);
+        public override string ToString()
+        {
+            var result = new StringBuilder();
+
+            foreach (var header in this.headers)
+            {
+                result.AppendLine(header.Value.ToString());
+            }
+
+            return result.ToString();
+        }
     }
 }

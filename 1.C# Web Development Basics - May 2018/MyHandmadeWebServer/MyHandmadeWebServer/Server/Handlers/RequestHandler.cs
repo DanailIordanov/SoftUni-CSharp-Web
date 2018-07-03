@@ -6,7 +6,7 @@
 
     using System;
 
-    public abstract class RequestHandler : IRequestHandler
+    public class RequestHandler : IRequestHandler
     {
         private readonly Func<IHttpRequest, IHttpResponse> handlingFunc;
 

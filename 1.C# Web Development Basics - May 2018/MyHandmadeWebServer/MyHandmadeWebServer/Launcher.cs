@@ -1,10 +1,9 @@
 ﻿namespace MyHandmadeWebServer
 {
-    using MyHandmadeWebServer.Server;
-    using MyHandmadeWebServer.Server.Contracts;
-    using MyHandmadeWebServer.Server.Routing;
-
-    using System;
+    using Application;
+    using Server;
+    using Server.Contracts;
+    using Server.Routing;
 
     public class Launcher : IRunnable
     {
@@ -17,8 +16,11 @@
 
         public void Run()
         {
-            var routeConfig = new AppRouteConfig();
-            this.webServer = new WebServer(8230, routeConfig);
+            var appRouteConfig = new AppRouteConfig();
+            var mainApplication = new MainApplication();
+            mainApplication.Configure(appRouteConfig);
+
+            this.webServer = new WebServer(8230, appRouteConfig);
             this.webServer.Run();
         }
     }
