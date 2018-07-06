@@ -3,7 +3,7 @@
     using Common;
     using Contracts;
     using Http.Contracts;
-
+    using MyHandmadeWebServer.Server.Http;
     using System;
 
     public class RequestHandler : IRequestHandler
@@ -21,7 +21,7 @@
         {
             var response = this.handlingFunc(context.Request);
 
-            response.AddHeader("Content-Type", "text/html");
+            response.AddHeader(HttpHeader.ContentType, "text/html");
 
             return response;
         }
