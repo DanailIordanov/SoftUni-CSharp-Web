@@ -19,9 +19,30 @@
 
         public IHttpResponse Handle(IHttpContext context)
         {
+            string sessionIdToSend = null;
+
+            if (!context.Request.Cookies.ContainsKey(SessionStore.SessionCookieKey))
+            {
+                var sessionId = Guid.NewGuid().ToString();
+
+                context.Request.Session = SessionStore.Get(sessionId);
+
+                sessionIdToSend = sessionId;
+            }
+
             var response = this.handlingFunc(context.Request);
 
             response.AddHeader(HttpHeader.ContentType, "text/html");
+
+            if (sessionIdToSend != null)
+            {
+                response.AddHeader(HttpHeader.SetCookie, $"{SessionStore.SessionCookieKey}={sessionIdToSend}; HttpOnly; path=/");
+            }
+
+            foreach (var cookie in response.Cookies)
+            {
+                response.AddHeader(HttpHeader.SetCookie, cookie.ToString());
+            }
 
             return response;
         }

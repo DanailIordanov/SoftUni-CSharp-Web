@@ -18,7 +18,11 @@
 
         IHttpHeaderCollection Headers { get; }
 
+        IHttpCookieCollection Cookies { get; }
+
         IDictionary<string, string> FormData { get; }
+
+        IHttpSession Session { get; set; }
 
         void AddUrlParameter(string key, string value);
     }

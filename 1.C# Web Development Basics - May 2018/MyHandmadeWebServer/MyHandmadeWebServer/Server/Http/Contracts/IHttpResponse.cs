@@ -8,6 +8,10 @@
 
         IHttpHeaderCollection Headers { get; }
 
+        IHttpCookieCollection Cookies { get; }
+
         void AddHeader(string key, string value);
+
+        void AddCookie(string key, string value);
     }
 }
