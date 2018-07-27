@@ -56,17 +56,17 @@
 
             while (true)
             {
-                var readBytesCount = await this.client.ReceiveAsync(data, SocketFlags.None);
+                var readBytesCount = await this.client.ReceiveAsync(data.Array, SocketFlags.None);
 
                 if (readBytesCount == 0)
                 {
                     break;
                 }
 
-                var bytesAsString = Encoding.ASCII.GetString(data.Array);
+                var bytesAsString = Encoding.UTF8.GetString(data.Array, 0, readBytesCount);
                 requestString.Append(bytesAsString);
 
-                if (readBytesCount < 1024)
+                if (readBytesCount < 1023)
                 {
                     break;
                 }

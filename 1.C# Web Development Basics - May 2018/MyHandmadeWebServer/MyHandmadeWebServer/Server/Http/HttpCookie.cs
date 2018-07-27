@@ -1,6 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Common;
+    using Common;
+
     using System;
 
     public class HttpCookie

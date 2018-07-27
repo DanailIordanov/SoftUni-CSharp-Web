@@ -1,10 +1,11 @@
-﻿using System.Collections.Concurrent;
-
-namespace MyHandmadeWebServer.Server.Http
+﻿namespace MyHandmadeWebServer.Server.Http
 {
+    using System.Collections.Concurrent;
+
     public static class SessionStore
     {
         public const string SessionCookieKey = "MYSID";
+        public const string CurrentUserKey = "^%Current_User_Session_Key%^";
 
         private static readonly ConcurrentDictionary<string, HttpSession> sessions = new ConcurrentDictionary<string, HttpSession>();
 

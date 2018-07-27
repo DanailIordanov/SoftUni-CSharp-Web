@@ -24,7 +24,6 @@
             this.Cookies = new HttpCookieCollection();
 
             this.UrlParameters = new Dictionary<string, string>();
-            this.QueryParameters = new Dictionary<string, string>();
             this.FormData = new Dictionary<string, string>();
 
             this.ParseRequest(requestText);
@@ -37,8 +36,6 @@
         public IDictionary<string, string> UrlParameters { get; private set; }
 
         public string Path { get; private set; }
-
-        public IDictionary<string, string> QueryParameters { get; private set; }
 
         public IHttpHeaderCollection Headers { get; private set; }
 
@@ -65,7 +62,7 @@
                 throw new BadRequestException("Invalid request.");
             }
 
-            var requestLine = requestLines[0].Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var requestLine = requestLines.First().Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (requestLine.Length != 3 || requestLine[2].ToLower() != "http/1.1")
             {
@@ -167,7 +164,7 @@
             }
 
             var query = this.Url.Split(new[] { '?' }, StringSplitOptions.RemoveEmptyEntries)[1];
-            ParseQuery(query, this.QueryParameters);
+            ParseQuery(query, this.UrlParameters);
         }
 
         private void ParseQuery(string query, IDictionary<string, string> dictionary)
@@ -177,11 +174,11 @@
                 return;
             }
 
-            var queryPairs = query.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
+            var queryPairs = query.Split(new[] { '&' });
 
             foreach (var pair in queryPairs)
             {
-                var pairArgs = pair.Split(new[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+                var pairArgs = pair.Split(new[] { '=' });
                 if (pairArgs.Length != 2)
                 {
                     continue;

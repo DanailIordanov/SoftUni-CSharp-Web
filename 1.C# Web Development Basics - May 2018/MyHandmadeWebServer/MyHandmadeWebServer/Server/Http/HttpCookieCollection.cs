@@ -1,7 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Common;
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
 
     using System;
     using System.Collections;

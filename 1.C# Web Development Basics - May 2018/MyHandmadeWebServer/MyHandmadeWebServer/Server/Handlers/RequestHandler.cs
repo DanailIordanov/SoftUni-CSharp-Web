@@ -2,8 +2,9 @@
 {
     using Common;
     using Contracts;
+    using Http;
     using Http.Contracts;
-    using MyHandmadeWebServer.Server.Http;
+
     using System;
 
     public class RequestHandler : IRequestHandler

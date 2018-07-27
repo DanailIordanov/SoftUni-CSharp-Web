@@ -14,8 +14,6 @@
 
         string Path { get; }
 
-        IDictionary<string, string> QueryParameters { get; }
-
         IHttpHeaderCollection Headers { get; }
 
         IHttpCookieCollection Cookies { get; }

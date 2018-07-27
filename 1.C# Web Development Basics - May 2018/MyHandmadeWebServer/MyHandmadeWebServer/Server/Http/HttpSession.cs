@@ -1,7 +1,8 @@
 ﻿namespace MyHandmadeWebServer.Server.Http
 {
-    using MyHandmadeWebServer.Server.Common;
-    using MyHandmadeWebServer.Server.Http.Contracts;
+    using Common;
+    using Contracts;
+
     using System;
     using System.Collections.Generic;
 
@@ -29,6 +30,8 @@
 
         public void Clear() => this.values.Clear();
 
+        public bool ContainsKey(string key) => this.values.ContainsKey(key);
+
         public object Get(string key)
         {
             CoreValidator.ThrowIfNullOrEmpty(key, nameof(key));
@@ -40,5 +43,7 @@
 
             return this.values[key];
         }
+
+        public T Get<T>(string key) => (T)this.Get(key);
     }
 }

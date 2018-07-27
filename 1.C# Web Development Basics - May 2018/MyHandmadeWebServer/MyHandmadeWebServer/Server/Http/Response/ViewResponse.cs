@@ -3,6 +3,7 @@
     using Common;
     using Enums;
     using Exceptions;
+
     using Server.Contracts;
 
     public class ViewResponse : HttpResponse

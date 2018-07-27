@@ -1,7 +1,7 @@
 ﻿namespace MyHandmadeWebServer.Server.Http.Response
 {
+    using Contracts;
     using Enums;
-    using Http.Contracts;
 
     using System.Text;
 
