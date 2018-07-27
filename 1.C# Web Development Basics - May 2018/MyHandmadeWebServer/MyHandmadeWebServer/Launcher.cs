@@ -1,6 +1,7 @@
 ﻿namespace MyHandmadeWebServer
 {
-    using Application;
+    using ByTheCake;
+
     using Server;
     using Server.Contracts;
     using Server.Routing;
@@ -17,8 +18,10 @@
         public void Run()
         {
             var appRouteConfig = new AppRouteConfig();
-            var mainApplication = new MainApplication();
-            mainApplication.Configure(appRouteConfig);
+
+            var application = new ByTheCakeApplication();
+            application.InitializeDatabase();
+            application.Configure(appRouteConfig);
 
             this.webServer = new WebServer(8230, appRouteConfig);
             this.webServer.Run();
