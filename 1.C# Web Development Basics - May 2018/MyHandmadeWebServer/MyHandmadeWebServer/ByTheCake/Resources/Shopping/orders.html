@@ -1,0 +1,15 @@
+﻿    <div>
+        <a href="/">Back to home</a>
+    </div>
+    <h1>My orders</h1>
+    <table style="display: {{{showTable}}};">
+        <tr>
+            <th>OrderId</th>
+            <th>Created On</th>
+            <th>Sum</th>
+        </tr>
+        {{{orders}}}
+    </table>
+    <div style="display: {{{showError}}}">
+        {{{error}}}
+    </div>
