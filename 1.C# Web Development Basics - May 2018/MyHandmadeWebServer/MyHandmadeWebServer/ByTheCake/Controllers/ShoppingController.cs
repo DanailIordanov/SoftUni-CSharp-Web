@@ -8,8 +8,8 @@
     using Services.Contracts;
     using ViewModels.Shopping;
 
-    using System.Linq;
     using System;
+    using System.Linq;
 
     public class ShoppingController : Controller
     {
