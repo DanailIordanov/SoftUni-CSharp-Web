@@ -1,15 +1,24 @@
 ﻿namespace Mvc.Framework.Controllers
 {
+    using Attributes.Validation;
     using Contracts;
-    using Contracts.Generic;
+    using Models;
     using ViewEngine;
-    using ViewEngine.Generic;
 
     using System.Runtime.CompilerServices;
+    using System.Reflection;
+    using System.Linq;
 
     public class Controller
     {
-        protected IActionResult View([CallerMemberName]string caller = "")
+        public Controller()
+        {
+            this.ViewModel = new ViewModel();
+        }
+
+        protected ViewModel ViewModel { get; private set; }
+
+        protected IViewable View([CallerMemberName]string caller = "")
         {
             var controllerName = this.GetType().Name.Replace(MvcContext.Get.ControllersSuffix, string.Empty);
 
@@ -20,45 +29,38 @@
                             controllerName,
                             caller);
 
-            return new ActionResult(fullViewName);
+            var view = new View(fullViewName, this.ViewModel.Data);
+
+            return new ViewResult(view);
         }
 
-        protected IActionResult View(string controller, string action)
+        protected IRedirectable Redirect(string redirectUrl) => new RedirectResult(redirectUrl);
+
+        protected IActionResult NotFound() => new NotFoundResult();
+
+        protected bool IsValidModel(object model)
         {
-            var fullViewName = string.Format(
-                                "{0}.{1}.{2}.{3}, {0}",
-                                MvcContext.Get.AssemblyName,
-                                MvcContext.Get.ViewsFolder,
-                                controller,
-                                action);
+            var properties = model.GetType().GetProperties();
 
-            return new ActionResult(fullViewName);
-        }
+            foreach (var property in properties)
+            {
+                var attributes = property
+                    .GetCustomAttributes()
+                    .Where(a => a is PropertyValidationAttribute)
+                    .Cast<PropertyValidationAttribute>();
+                
+                foreach (var attribute in attributes)
+                {
+                    var propertyValue = property.GetValue(model);
 
-        protected IActionResult<T> View<T>(T model, [CallerMemberName]string caller = "")
-        {
-            var controllerName = this.GetType().Name.Replace(MvcContext.Get.ControllersSuffix, string.Empty);
+                    if (!attribute.IsValid(propertyValue))
+                    {
+                        return false;
+                    }
+                }
+            }
 
-            var fullViewName = string.Format(
-                                "{0}.{1}.{2}.{3}, {0}",
-                                MvcContext.Get.AssemblyName,
-                                MvcContext.Get.ViewsFolder,
-                                controllerName,
-                                caller);
-
-            return new ActionResult<T>(fullViewName, model);
-        }
-
-        protected IActionResult<T> View<T>(T model, string controller, string action)
-        {
-            var fullViewName = string.Format(
-                                "{0}.{1}.{2}.{3}, {0}",
-                                MvcContext.Get.AssemblyName,
-                                MvcContext.Get.ViewsFolder,
-                                controller,
-                                action);
-
-            return new ActionResult<T>(fullViewName, model);
+            return true;
         }
     }
 }

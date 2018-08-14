@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer", "WebServer\WebServer.csproj", "{72911109-BEDB-43A3-9747-05BE33389BD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Framework", "Mvc.Framework\Mvc.Framework.csproj", "{EB6F666F-64A3-40A0-A806-0A22631C3803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mvc.Framework", "Mvc.Framework\Mvc.Framework.csproj", "{EB6F666F-64A3-40A0-A806-0A22631C3803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.Application", "Mvc.Application\Mvc.Application.csproj", "{1383F95C-A36D-4422-B39E-AB05038C4B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{EB6F666F-64A3-40A0-A806-0A22631C3803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB6F666F-64A3-40A0-A806-0A22631C3803}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB6F666F-64A3-40A0-A806-0A22631C3803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1383F95C-A36D-4422-B39E-AB05038C4B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1383F95C-A36D-4422-B39E-AB05038C4B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1383F95C-A36D-4422-B39E-AB05038C4B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1383F95C-A36D-4422-B39E-AB05038C4B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
