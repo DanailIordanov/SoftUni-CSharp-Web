@@ -1,13 +1,12 @@
 ﻿namespace Mvc.Framework.Routers
 {
     using WebServer.Contracts;
+    using WebServer.Enums;
     using WebServer.Http.Contracts;
     using WebServer.Http.Response;
 
-    using System.Linq;
     using System.IO;
-    using WebServer.Enums;
-    using System;
+    using System.Linq;
 
     public class ResourceRouter : IHandleable
     {

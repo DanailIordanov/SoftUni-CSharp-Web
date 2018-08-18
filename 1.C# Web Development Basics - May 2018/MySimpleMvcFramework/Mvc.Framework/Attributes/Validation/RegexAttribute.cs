@@ -1,7 +1,7 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Mvc.Framework.Attributes.Validation
+﻿namespace Mvc.Framework.Attributes.Validation
 {
+    using System.Text.RegularExpressions;
+
     public class RegexAttribute : PropertyValidationAttribute
     {
         private readonly string pattern;
