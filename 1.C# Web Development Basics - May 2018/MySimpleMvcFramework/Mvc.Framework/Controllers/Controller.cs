@@ -3,20 +3,28 @@
     using Attributes.Validation;
     using Contracts;
     using Models;
+    using Security;
     using ViewEngine;
+    using WebServer.Http.Contracts;
 
     using System.Runtime.CompilerServices;
     using System.Reflection;
     using System.Linq;
+    using WebServer.Http;
 
     public class Controller
     {
         public Controller()
         {
             this.ViewModel = new ViewModel();
+            this.User = new Authentication();
         }
 
         protected ViewModel ViewModel { get; private set; }
+
+        protected internal IHttpRequest Request { get; internal set; }
+
+        protected internal Authentication User { get; private set; }
 
         protected IViewable View([CallerMemberName]string caller = "")
         {
@@ -61,6 +69,26 @@
             }
 
             return true;
+        }
+
+        protected void SignIn(string username)
+        {
+            this.Request.Session.Add(SessionStore.CurrentUserKey, username);
+        }
+
+        protected void SignOut()
+        {
+            this.Request.Session.Clear();
+        }
+
+        protected internal void InitializeController()
+        {
+            var user = this.Request.Session.Get<string>(SessionStore.CurrentUserKey);
+
+            if (user != null)
+            {
+                this.User = new Authentication(user);
+            }
         }
     }
 }

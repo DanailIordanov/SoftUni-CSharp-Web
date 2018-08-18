@@ -1,6 +1,7 @@
 ﻿namespace Mvc.Framework.Routers
 {
     using Attributes.Methods;
+    using Contracts;
     using Controllers;
     using WebServer.Contracts;
     using WebServer.Http.Contracts;
@@ -10,7 +11,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using Mvc.Framework.Contracts;
 
     public class ControllerRouter : IHandleable
     {
@@ -38,9 +38,17 @@
 
             this.PrepareMethodParameters(methodInfo);
 
+            var controller = this.GetControllerInstance();
+
+            if (controller != null)
+            {
+                controller.Request = request;
+                controller.InitializeController();
+            }
+
             try
             {
-                return this.GetResponse(methodInfo, this.GetControllerInstance());
+                return this.GetResponse(methodInfo, controller);
             }
             catch (Exception ex)
             {

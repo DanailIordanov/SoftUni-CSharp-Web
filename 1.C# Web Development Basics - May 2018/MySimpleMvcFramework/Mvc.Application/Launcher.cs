@@ -8,7 +8,7 @@
     {
         public static void Main()
         {
-            var server = new WebServer(9230, new ControllerRouter());
+            var server = new WebServer(9230, new ControllerRouter(), new ResourceRouter());
             MvcEngine.Run(server);
         }
     }

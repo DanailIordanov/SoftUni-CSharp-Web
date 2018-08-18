@@ -19,5 +19,7 @@
         public string ViewsFolder { get; set; }
 
         public string ModelsFolder { get; set; }
+
+        public string ResourcesFolder { get; set; }
     }
 }
