@@ -37,7 +37,7 @@
 
         private static void RegisterViewsData()
         {
-            MvcContext.Get.ViewsFolder = "Views";
+            MvcContext.Get.ViewsFolder = @".\..\..\..\Views";
         }
 
         private static void RegisterModelsData()

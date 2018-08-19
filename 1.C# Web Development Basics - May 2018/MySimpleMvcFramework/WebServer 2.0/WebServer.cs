@@ -1,7 +1,8 @@
 ﻿namespace WebServer
 {
+    using Common;
     using Contracts;
-    using global::WebServer.Common;
+
     using System;
     using System.Net;
     using System.Net.Sockets;

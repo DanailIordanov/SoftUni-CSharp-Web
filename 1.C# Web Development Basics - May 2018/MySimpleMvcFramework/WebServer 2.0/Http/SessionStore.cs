@@ -4,7 +4,7 @@
 
     public static class SessionStore
     {
-        public const string SessionCookieKey = "MY_SID";
+        public const string SessionCookieKey = "MYSID";
         public const string CurrentUserKey = "^%Current_User_Session_Key%^";
 
         private static readonly ConcurrentDictionary<string, HttpSession> sessions = new ConcurrentDictionary<string, HttpSession>();

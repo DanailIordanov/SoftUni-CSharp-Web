@@ -41,7 +41,7 @@
         {
             var layoutHtml = this.ReadLayoutFile();
 
-            var viewFullName = $"{viewFullPath}{HtmlExtension}";
+            var viewFullName = $"{this.viewFullPath}{HtmlExtension}";
 
             if (!File.Exists(viewFullName))
             {

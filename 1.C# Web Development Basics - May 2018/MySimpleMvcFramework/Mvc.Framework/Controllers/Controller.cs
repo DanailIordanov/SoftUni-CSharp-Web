@@ -31,8 +31,7 @@
             var controllerName = this.GetType().Name.Replace(MvcContext.Get.ControllersSuffix, string.Empty);
 
             var fullViewName = string.Format(
-                            "{0}.{1}.{2}.{3}, {0}",
-                            MvcContext.Get.AssemblyName,
+                            @"{0}\{1}\{2}",
                             MvcContext.Get.ViewsFolder,
                             controllerName,
                             caller);

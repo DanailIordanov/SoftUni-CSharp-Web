@@ -1,8 +1,8 @@
 ﻿namespace WebServer.Http.Response
 {
+    using Common;
     using Enums;
     using Exceptions;
-    using Common;
 
     public class FileResponse : HttpResponse
     {

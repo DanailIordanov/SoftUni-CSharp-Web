@@ -3,7 +3,6 @@
     using Common;
     using Contracts;
 
-    using System;
     using System.Collections.Generic;
 
     public class HttpSession : IHttpSession
@@ -38,7 +37,7 @@
 
             if (!this.values.ContainsKey(key))
             {
-                throw new InvalidOperationException($"The given key '{key}' is not present in the session.");
+                return null;
             }
 
             return this.values[key];
